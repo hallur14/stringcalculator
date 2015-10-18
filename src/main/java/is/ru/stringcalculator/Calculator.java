@@ -3,11 +3,19 @@ package is.ru.stringcalculator;
 public class Calculator {
 
 	public static int add(String text){
+	
+		String splitter = ",|\n";
+	
+		if(text.startsWith("//")){
+            splitter = String.valueOf(text.charAt(2));
+			text = text.substring(text.indexOf("\n") + 1);	
+        }
+	
 		if(text.equals("")){
 			return 0;
 		}
-		else if(text.contains(",") || text.contains("\n")){
-			return sum(splitNumbers(",|\n", text));
+		else if(splitter != ",|\n" || text.contains(",") || text.contains("\n")){
+			return sum(splitNumbers(splitter, text));
 		}
 		else
 			return toInt(text);
