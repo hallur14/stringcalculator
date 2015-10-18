@@ -7,8 +7,13 @@ public class Calculator {
 	public static int add(String text){
 	
 		String splitter = ",|\n";
-	
-		if(text.startsWith("//")){
+		
+		if(text.startsWith("//[")){
+			splitter = text.substring(3, text.indexOf("]"));
+			splitter = securityCheck(splitter);
+			text = text.substring(text.indexOf("\n") + 1);	
+        }
+		else if(text.startsWith("//")){
             splitter = String.valueOf(text.charAt(2));
 			text = text.substring(text.indexOf("\n") + 1);	
         }
@@ -21,6 +26,11 @@ public class Calculator {
 		}
 		else
 			return toInt(text);
+	}
+	
+	private static String securityCheck(String deliminator){
+		String temp = ("\\Q" + deliminator + "\\E");
+		return temp;
 	}
 
 	private static int toInt(String number){
